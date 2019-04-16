@@ -1,0 +1,43 @@
+<body ng-app="addPoll">
+    <div ng-controller="pollCtrl" clas="container p-4">
+        <div class="row">
+            <legend>Crear encuesta</legend>
+            <div class="container text-center">
+                <form action="/polls/add" method="POST">
+                    <div class="col-md-20">
+                        <div class="form-group">
+                            <label for="question">Nombre: </label>
+                            <input type="text" ng-model="question" name="question" id="question"
+                                placeholder="Ingresa el nombre de la encuesta" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="question">Descripcion: </label>
+                            <input type="text" ng-model="description" name="description" id="description"
+                                placeholder="Ingresa el nombre de la encuesta" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="dateRange">Fecha/Hora de inicio y fin: </label>
+                            <input type="text" name="dateRange" id="daterange" value="01/01/2018 - 01/15/2018"
+                                placeholder="Ingresa una respuesta" class="form-control" />
+                        </div>
+
+                        <div class="form-group" data-ng-repeat="answer in choices">
+                            <label for="answers">Respuesta: </label>
+                            <input type="text" ng-model="answers" name="answers" id="answers"
+                                placeholder="Ingresa una respuesta" class="form-control" />
+                        </div>
+                        <div>
+                            <button type="button" class="mb-sm btn btn-primary" ng-click="addChoice()">Agregar otra
+                                respuesta</button>
+                            <button type="submit" class="mb-sm btn btn-success">Crear encuesta</button>
+                            <!--<button type="submit" class="mb-sm btn btn-success" <!--ng-click="create()">Crear encuesta</button>-->
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <br />
+        </div>
+</body>
+
+<script src="/scripts/addAnswerButton.js"></script>
+<script src="/scripts/dateTimePickerPoll.js"></script>

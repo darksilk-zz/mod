@@ -1,0 +1,59 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card text-left">
+                <div class="card-header">
+                    <h3>Registrar nueva persona</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/person/add" method="POST">
+                        <div class="form-group">
+                            <label for="name">Nombre(s): </label>
+                            <input type="text" name="name" placeholder="Nombre(s)"  size="40%" id="name">
+                            {{!--</div>
+                        <div class="form-group"> --}}
+
+                            <input type="text" name="lastname" id="lastname" placeholder="Apellido Paterno" size="20%">
+
+                            <input type="text" name="surname" id="surname" placeholder="Apellido Materno">
+                        </div>
+                        <div class="form-group">
+                            <label for="birthdate">Fecha de nacimiento: </label>
+                            <input type="text" name="birthdate" id="birthdate" value="" placeholder="Fecha de nacimiento"/>
+                            <label for="name">CURP: </label>
+                            <input type="text" name="curp" id="curp" value="" placeholder="CURP" onblur="regexCURP()"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado: </label>
+                            <select id="estado" name="estado">
+                                <option selected="" disabled="">Selecciona un estado</option>
+                                {{#each estados}}
+                                <option value="{{id}}">{{nombre}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="municipio" class="text-left">Municipio: </label>
+                            <select id="municipio" name="municipio">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="text-left">Direccion: </label>
+                            <input type="text" id="address" name="address" placeholder="Calle" size="40">
+                            <input type="text" id="address_num" name="address_num" placeholder="Numero">
+                            <input type="text" id="address_letter" name="address_letter" placeholder="Int">
+                            <input type="text" id="cp" name="cp" placeholder="Codigo Postal">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/scripts/regexCURP.js"></script>
+<script src="/scripts/getMunicipio.js"></script>
+<script src="/scripts/dateTimePickerPerson.js"></script>

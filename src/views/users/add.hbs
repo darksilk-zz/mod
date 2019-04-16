@@ -1,0 +1,40 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card text-left">
+                <div class="card-header">
+                    <h3>Registrar nuevo empleado</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/users/add" method="POST">
+                    <div class="form-group">
+                            <label for="username">Creado por: </label>
+                            <input disabled type="text" name="created_by" id="created_by" value="{{user.username}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="CURP">CURP: </label>
+                            <input type="text" onblur="checkCURP()" name="CURP" placeholder="Ingresa CURP" id="CURP" size="70">
+                        
+                            <label for="id_person">ID: </label>
+                            <input type="text" name="id_person" id="id_person" placeholder="Valor automatico" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Usuario: </label>
+                            <input disabled type="text" name="username" placeholder="Nombre de usuario" id="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña: </label>
+                            <input disabled type="password" name="password" placeholder="Contraseña"
+                                id="password">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/scripts/validateCURP.js"></script>

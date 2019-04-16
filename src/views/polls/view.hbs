@@ -1,0 +1,32 @@
+{{#each polls}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card mt-4 text-left">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li>
+                            <h3>{{math @index "+" 1}}: {{question}}</h3>
+                        </li>
+                        <li>Fecha de inicio: {{dateStart}}</li>
+                        <li>Fecha de termino: {{dateEnd}} </li>
+                        <li>Respuestas:
+                            <ul>
+                                {{#each answers}}
+                                <li>{{this}}</br></li>
+                                {{/each}}
+                            </ul>
+                        </li>
+                        <li>Creada por: {{created_by}}</li>
+                        <li>Creada en: {{created_at}} </li>
+                        <li>Activo: {{active}} </li>
+                    </ul>
+                    <a href="./edit/{{_id}}" class="btn btn-outline-primary">Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}

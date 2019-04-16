@@ -1,0 +1,25 @@
+{{!--
+{{#with polls.[0]}}
+  {{question}}
+{{/with}}
+--}}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <form action="/polls/edit/{{polls.0._id}}" method="POST">
+                <div class="form-group">
+                    Nombre: <input type="text" name="question" value="{{polls.0.question}}">
+                    </br>
+                </div>
+                {{#each polls.0.answers}}
+                <div class="form-group">
+                    Respuesta {{math @index "+" 1}}: <input type="text" name="answers" value="{{this}}">
+                    </br>
+                </div>
+                {{/each}}
+                <button type="submit" class="btn btn-block btn-primary">Modificar</button>
+            </form>
+        </div>
+    </div>
+</div>
