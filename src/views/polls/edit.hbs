@@ -4,37 +4,54 @@
 {{/with}}
 --}}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 mt-5">
-            <form action="/polls/edit/{{polls.0._id}}" method="POST">
-                <div class="form-group">
-                    <label for="question">Nombre: </label>
-                    <input type="text" name="question" id="question" value="{{polls.0.question}}">
-                    </br>
-                </div>
+<body ng-app="addPoll">
+    <div ng-controller="pollCtrl" class="container p-4">
+        <div class="row">
+            <div class="col-md-6 mt-5">
+                <form action="/polls/edit/{{polls.0._id}}" method="POST">
+                    <div class="form-group">
+                        <label for="question">Nombre: </label>
+                        <input type="text" name="question" id="question" value="{{polls.0.question}}">
+                        </br>
+                    </div>
 
-                <div class="form-group">
-                    <label for="description">Descripcion: </label>
-                    <input type="text" name="description" id="description" value="{{polls.0.description}}">
-                    </br>
-                </div>
+                    <div class="form-group">
+                        <label for="description">Descripcion: </label>
+                        <input type="text" name="description" id="description" value="{{polls.0.description}}">
+                        </br>
+                    </div>
 
-                <div class="form-group">
-                    <label for="dateRange">Fecha/Hora de inicio y fin: </label>
-                    <input type="text" name="dateRange" id="daterange" value="01/01/2018 - 01/15/2018"
-                        placeholder="Ingresa una respuesta" class="form-control" />
-                    <input type="hidden" value="{{polls.0.dateStart}}" name="start" id="start" disabled >
-                    <input type="hidden" value="{{polls.0.dateEnd}}" name="end" id="end" disabled >
-                        {{#each polls.0.answers}} <div class="form-group">
-                    Respuesta {{math @index "+" 1}}: <input type="text" name="answers" value="{{this}}">
-                    </br>
-                </div>
-                {{/each}}
-                <button type="submit" class="btn btn-block btn-primary">Modificar</button>
-            </form>
+                    <div class="form-group">
+                        <label for="dateRange">Fecha/Hora de inicio y fin: </label>
+                        <input type="text" name="dateRange" id="daterange" value="01/01/2018 - 01/15/2018"
+                            placeholder="Ingresa una respuesta" class="form-control" />
+                        <input type="hidden" value="{{polls.0.dateStart}}" name="start" id="start" disabled>
+                        <input type="hidden" value="{{polls.0.dateEnd}}" name="end" id="end" disabled>
+                          
+                        {{#each polls.0.answers}} 
+                        <div class="form-group">
+                            Respuesta {{math @index "+" 1}}: 
+                            <input type="text" name="answers" value="{{this}}">
+                            </br>
+                        </div>
+                        {{/each}}
+                        
+                        <div class="form-group" data-ng-repeat="answer in choices">
+                            <input type="text" ng-model="answers" name="answers" id="answers"
+                                placeholder="Agregar respuesta" class="form-control" />
+                        </div>
+                        
+                        <div>
+                            <button type="button" class="mb-sm btn btn-primary" ng-click="addChoice()">Agregar otra
+                                respuesta</button>
+                            <button type="submit" class="mb-sm btn btn-success">Guardar Cambios</button>
+                        </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</body>
 
+
+<script src="/scripts/addAnswerButton.js"></script>
 <script src="/scripts/dateTimePickerPollEdit.js"></script>

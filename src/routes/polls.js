@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Poll = require('../model/polls');
 const moment = require('moment');
-const {isLoggedIn, isNotLoggedIn, isLoggedInAdmin} = require('../lib/auth');
+var mongoose = require("mongoose")
 
-router.get('/', (req, res) => {
-    res.send("hello poll")
-});
 
-router.get('/date', (req, res) => {
-    res.render('./polls/date.hbs');
+const { isLoggedIn, isNotLoggedIn, isLoggedInAdmin } = require('../lib/auth');
+
+router.get('/', isLoggedIn, async (req, res) => {
+    res.send("Hello");
 });
 
 router.get('/view', isLoggedIn, async (req, res) => {
@@ -24,7 +23,7 @@ router.get('/add', isLoggedIn, (req, res) => {
 });
 
 router.post('/add', isLoggedIn, async (req, res, next) => {
-    var dates=(req.body.dateRange).split("-");
+    var dates = (req.body.dateRange).split("-");
     var epochStart = moment(dates[0], "DD-MM-YYYY HH:MM").unix();
     var epochEnd = moment(dates[1], "DD-MM-YYYY HH:MM").unix();
     console.log("date ranges", req.body.dateRange);
@@ -36,7 +35,7 @@ router.post('/add', isLoggedIn, async (req, res, next) => {
     var poll = new Poll({
         question: req.body.question,
         description: req.body.description,
-        dateStart: dates[0], 
+        dateStart: dates[0],
         dateEnd: dates[1],
         dateStarEpoch: epochStart,
         dateEndEpoch: epochEnd,
@@ -60,15 +59,22 @@ router.get('/edit/:_id', isLoggedIn, async (req, res) => {
 
 router.post('/edit/:id', isLoggedIn, async (req, res, next) => {
     const { id } = req.params;
-    console.log(id);
-    var dates=(req.body.dateRange).split("-");
+    var dates = (req.body.dateRange).split("-");
     var epochStart = moment(dates[0], "DD-MM-YYYY HH:MM").unix();
     var epochEnd = moment(dates[1], "DD-MM-YYYY HH:MM").unix();
-    
+    var answers = req.body.answers;
+    answers.forEach((element,i) => {
+        if(element === ''){
+            answers.splice(i, 1);
+       } 
+    });
+    /*ans.forEach(function (value, i) {
+        console.log(i, value);
+    });*/
     var poll = new Poll({
         question: req.body.question,
         description: req.body.description,
-        dateStart: dates[0], 
+        dateStart: dates[0],
         dateEnd: dates[1],
         dateStarEpoch: epochStart,
         dateEndEpoch: epochEnd,
@@ -83,10 +89,13 @@ router.post('/edit/:id', isLoggedIn, async (req, res, next) => {
         if (err || !doc) {
             throw 'Error';
         } else {
-            res.redirect('./view');
+            res.redirect('/polls/view');
         }
     })
     );
 });
+
+/*const { id } = req.params;
+await Poll.remove({ _id: id });*/
 
 module.exports = router;
