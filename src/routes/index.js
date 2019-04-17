@@ -7,7 +7,6 @@ router.get('/', (req, res) => {
     res.render('index.hbs');
 })
 
-
 //var agenda = new Agenda(mongoose.connect('mongodb://localhost/encuestas-mongo', { useNewUrlParser: true }));
 // or provide your own mongo client:
 // var agenda = new Agenda({mongo: myMongoClient})

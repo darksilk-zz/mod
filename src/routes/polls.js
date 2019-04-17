@@ -4,6 +4,7 @@ const Poll = require('../model/polls');
 const moment = require('moment');
 const CronJob = require('cron').CronJob;
 var cron = require('node-cron');
+const { isLoggedIn, isNotLoggedIn, isLoggedInAdmin } = require('../lib/auth');
 
 //new CronJob('*/5 * * * * *', async function() {
 cron.schedule('1 * 1/1 * *', async function() {
@@ -31,17 +32,18 @@ cron.schedule('1 * 1/1 * *', async function() {
     })
 }, null, true, 'America/Mexico_City');
 
-
-const { isLoggedIn, isNotLoggedIn, isLoggedInAdmin } = require('../lib/auth');
-
 router.get('/', isLoggedIn, async (req, res) => {
     res.send("Hello");
 });
 
 router.get('/view', isLoggedIn, async (req, res) => {
+    const us = req.user
+    console.log(us);
     const polls = await Poll.find({});
     res.render('./polls/view.hbs', {
-        polls
+        polls,
+        user: req.user
+        
     });
 });
 
@@ -122,7 +124,10 @@ router.post('/edit/:id', isLoggedIn, async (req, res, next) => {
     );
 });
 
-/*const { id } = req.params;
-await Poll.remove({ _id: id });*/
+router.get('/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    await Poll.deleteOne({_id: id});
+    res.redirect('/polls/view');
+})
 
 module.exports = router;
