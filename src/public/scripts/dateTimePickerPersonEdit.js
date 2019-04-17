@@ -1,6 +1,6 @@
 /*Date in format: Tue Apr 16 2019 00:00:00 GMT-0500 (GMT-05:00)
 Birthdate split to get index 03(year), 01(month), 02(day)*/
-
+var bday = $('#birthdate').val();
 var birthdate = ($('#birthdate').val()).split(" ");
 console.log($('#birthdate').val());
 
@@ -29,7 +29,8 @@ $(function () {
         showDropdowns: true,
         minYear: 1901,
         opens: 'center',
-        startDate: date,
+        //startDate: date,
+        startDate: moment(bday, "LLLL"),
         maxYear: parseInt(moment().format('YYYY')) - 17,
         "locale": {
             format: 'YYYY/MM/DD',

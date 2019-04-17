@@ -1,3 +1,6 @@
+var dateStart = $('#start').val();
+var dateEnd = $('#end').val();
+console.log(dateStart + "   " + dateEnd)
 $(function () {
     $('input[name="dateRange"]').daterangepicker({
         opens: 'center',
@@ -6,11 +9,11 @@ $(function () {
         timePicker24Hour: true,
         timePickerIncrement: 60,
         minDate: moment(),
-        startDate: moment().startOf('hour'),
-        endDate: moment().startOf('hour').add(32, 'hour'),
+        startDate: moment(dateStart, "DD-MM-YYYY HH:mm"),
+        endDate: moment(dateEnd, "DD-MM-YYYY HH:mm"),
         locale: {
             separator: "-",
-            format: 'DD/MM/YYYY HH:mm',
+            format: 'DD/MM/YYYY HH:MM',
             "daysOfWeek": [
                 "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"
             ],
@@ -22,8 +25,6 @@ $(function () {
             "firstDay": 1
         }
     }, function (start, end, label) {
-        console.log('New date range selected: ' + start.format('YYYY-MM-DD HH:MM') + ' to ' + end.format('YYYY-MM-DD H:m') + ' (predefined range: ' + label + ')');
-        
         console.log("Date range: " + start.format('DD/MM/YYYY HH:MM') + ' to ' + end.format('DD/MM/YYY HH:MM'));
         var date = start.format('YYYY-MM-DDTHH:MM') + ' - ' + end.format('YYYY-MM-DDTHH:MM')
         var date = date.split(" - ");

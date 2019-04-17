@@ -14,8 +14,6 @@ router.get('/date', (req, res) => {
 
 router.get('/view', isLoggedIn, async (req, res) => {
     const polls = await Poll.find({});
-    console.log("Tamaño de objeto", polls.length);
-    
     res.render('./polls/view.hbs', {
         polls
     });
@@ -62,9 +60,21 @@ router.get('/edit/:_id', isLoggedIn, async (req, res) => {
 
 router.post('/edit/:id', isLoggedIn, async (req, res, next) => {
     const { id } = req.params;
-
+    console.log(id);
+    var dates=(req.body.dateRange).split("-");
+    var epochStart = moment(dates[0], "DD-MM-YYYY HH:MM").unix();
+    var epochEnd = moment(dates[1], "DD-MM-YYYY HH:MM").unix();
+    
     var poll = new Poll({
         question: req.body.question,
+        description: req.body.description,
+        dateStart: dates[0], 
+        dateEnd: dates[1],
+        dateStarEpoch: epochStart,
+        dateEndEpoch: epochEnd,
+        active: 0,
+        created_at: new Date(),
+        created_by: req.user.username,
         answers: req.body.answers
     });
     var upsertData = poll.toObject();
