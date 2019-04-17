@@ -84,12 +84,6 @@ router.route('/search')
         console.log(toSearch);
         console.log(req.body);
         
-        /*await db.query(`select * from person`, (err, peoplle) => {
-
-                console.log(peoplle);
-               
-            })*/
-
         await db.query(`select person.id, person.name, person.lastname, person.surname, person.active, 
                         estado.nombre as nombreEstado, municipio.nombre as nombreMunicipio,
                         person.curp, person.birthdate

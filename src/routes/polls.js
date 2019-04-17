@@ -14,21 +14,8 @@ router.get('/date', (req, res) => {
 
 router.get('/view', isLoggedIn, async (req, res) => {
     const polls = await Poll.find({});
-    for (var i = 0; i < polls.length; i++) {
-        if (polls[i].active == '1') {
-            polls[i].active = "Si";
-           
-            
-        } else if (polls[i].active == '0') {
-            polls[i].active = "No";
-            var num = "No"
-            polls.push({num:[i].num});
-            console.log(polls[i]);
-       
-        }
-    }
-
-
+    console.log("Tamaño de objeto", polls.length);
+    
     res.render('./polls/view.hbs', {
         polls
     });
