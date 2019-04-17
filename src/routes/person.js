@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../database');
 const passport = require('passport');
 const helpers = require('../lib/helpers');
-const {isLoggedIn, isNotLoggedIn, isLoggedInAdmin} = require('../lib/auth');
+const { isLoggedIn, isNotLoggedIn, isLoggedInAdmin } = require('../lib/auth');
 
 
 router.get('/', (req, res) => {
@@ -13,25 +13,45 @@ router.get('/', (req, res) => {
 router.route('/add')
     .post(isLoggedIn, async (req, res) => {
         console.log('Object Received from \'Add\' view: ', req.body)
-        const { name, apellidoP, apellidoM, municipio, estado } = req.body;
-        const newPerson = {
-            name,
-            apellidoP,
-            apellidoM,
-            municipio_id: municipio,
-            estado_id: estado,
-            active: 1
-        };
-        await db.query('insert into person set ?', [newPerson], (err, result) => {
-            if (result) {
-                console.log('Insertion Result: ', result);
-                req.flash('success', 'Persona guardada correctamente');
-            } else if (err) {
-                console.log('AN ERROR OCURRED!: ', err);
-                req.flash('message', 'An error ocurred, please try again')
-            }
+        const { name, lastname, surname, birthdate, curp,
+            estado, municipio, cp, address, address_num,
+            address_letter } = req.body;
+        const existPerson = await db.query('select * from person where curp=?', [curp]);
+
+        if (typeof existPerson !== 'undefined' && existPerson.length > 0) {
+            req.flash('message', 'CURP ya registrada!.');
             res.redirect('/person/add');
-        });
+        }
+        else {
+            const newPerson = {
+                name: name.toUpperCase(),
+                lastname: lastname.toUpperCase(),
+                surname: surname.toUpperCase(),
+                birthdate,
+                curp: curp.toUpperCase(),
+                municipio_id: municipio,
+                estado_id: estado,
+                cp,
+                address,
+                address_num,
+                address_letter,
+                active: 1,
+                type: 3,
+                created_at: new Date(),
+                created_by: req.user.username
+
+            };
+            await db.query('insert into person set ?', [newPerson], (err, result) => {
+                if (result) {
+                    console.log('Insertion Result: ', result);
+                    req.flash('success', 'Persona guardada correctamente');
+                } else if (err) {
+                    console.log('AN ERROR OCURRED!: ', err);
+                    req.flash('message', 'Ocurrio un error, intenta nuevamente')
+                }
+                res.redirect('/person/add');
+            });
+        }
     })
 
     .get(isLoggedIn, async (req, res) => {
@@ -59,18 +79,35 @@ router.route('/search')
 
     .post(isLoggedIn, async (req, res) => {
         const toSearch = req.body.toSearch;
-        await db.query(`select person.id, person.name, person.apellidoP, person.apellidoM, person.active, estado.nombre as nombreEstado, municipio.nombre as nombreMunicipio 
+        console.log("buscar esto", toSearch);
+        console.log("buscar esto 2", req.body.toSearch);
+        console.log(toSearch);
+        console.log(req.body);
+        
+        /*await db.query(`select * from person`, (err, peoplle) => {
+
+                console.log(peoplle);
+               
+            })*/
+
+        await db.query(`select person.id, person.name, person.lastname, person.surname, person.active, 
+                        estado.nombre as nombreEstado, municipio.nombre as nombreMunicipio,
+                        person.curp, person.birthdate
                         from person as person
                         join estados as estado on estado.id=person.estado_id
                         join municipios as municipio on municipio.id=person.municipio_id
-                        where person.name regexp ?`, [toSearch], (err, people) => {
+                        where person.name regexp ? or person.curp regexp ?`, [toSearch,toSearch], (err, people) => {
+
                 for (var i = 0; i < people.length; i++) {
                     if (people[i].active == '1') {
                         people[i].active = "Si";
+                        
+
                     } else if (people[i].active == '0') {
                         people[i].active = "No";
                     }
                 }
+                console.log(people);
                 res.render('./person/search.hbs', {
                     data: people
                 })
@@ -97,23 +134,35 @@ router.get('/edit/:id', isLoggedIn, async (req, res) => {
 
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
-    /*const { name, apellidoP, apellidoM, municipio, estado } = req.body;
+    /*const { name, lastname, surname, birthdate, curp,
+        estado, municipio, cp, address, address_num,
+        address_letter } = req.body;
     const newPerson = {
         name,
-        apellidoP,
-        apellidoM,
+        lastname,
+        surname,
+        birthdate,
+        curp,
         municipio_id: municipio,
-        estado_id: estado
+        estado_id: estado,
+        cp,
+        address,
+        address_num,
+        address_letter,
+        active: 1,
+        type: 3,
+        created_at: new Date(),
+        created_by: req.user.username
     };*/
     newPerson = req.body;
     await db.query('update person set ? where id = ?', [newPerson, id], (err, result) => {
         if (result) {
             console.log('Insertion Result: ', result);
-            req.flash('success', 'Person saved successfully');
+            req.flash('success', 'Actualizado correctamente');
             res.redirect('#');
         } else if (err) {
             console.log('AN ERROR OCURRED!: ', err);
-            req.flash('message', 'An error ocurred, please try again')
+            req.flash('message', 'Ocurrió un error, intenta nuevamente')
         }
     });
 });
@@ -126,15 +175,14 @@ router.get('/deactivate/:id', isLoggedIn, async (req, res, done) => {
     await db.query("update person set ? where id=?", [deactivate, id], (err, result) => {
         if (result) {
             console.log('Insertion Result: ', result);
-            req.flash('success', 'Updated successfully');
+            req.flash('success', 'Actualizado correctamente');
             res.redirect('back');
         } else if (err) {
             console.log('AN ERROR OCURRED!: ', err);
-            req.flash('message', 'An error ocurred, please try again');
+            req.flash('message', 'Ocurrió un error, intenta nuevamente');
             res.redirect('back');
         }
     });
-
 });
 
 router.get('/activate/:id', isLoggedIn, async (req, res, next) => {
@@ -145,39 +193,15 @@ router.get('/activate/:id', isLoggedIn, async (req, res, next) => {
     await db.query("update person set ? where id=?", [activate, id], (err, result) => {
         if (result) {
             console.log('Insertion Result: ', result);
-            req.flash('success', 'Updated successfully');
+            req.flash('success', 'Actualizado correctamente');
             res.redirect(req.get('referer'));
         } else if (err) {
             console.log('AN ERROR OCURRED!: ', err);
-            req.flash('message', 'An error ocurred, please try again');
+            req.flash('message', 'Ocurrió un error, intenta nuevamente');
             res.redirect(req.get('referer'));
         }
     });
 
 });
-
-/*
-router.post('/add', async(req, res) => {
-    console.log('Object Received from \'Add\' view: ', req.body)
-    const { name, apellidoP, apellidoM } = req.body;
-    const newPerson= {
-        name,
-        apellidoP,
-        apellidoM
-    };
-    await db.query('insert into person set ?', [newPerson]);
-    req.flash('success', 'Person saved successfully');
-    res.redirect('/person/add');
- });*/
-
-/*router.put('/add/:id', async (req, res) => {
-   //console.log(req.body, req.params);
-   const { id } = req.params;
-   const arrayMunicipios = await db.query('select id, estado_id, nombre from municipios where estado_id= ?', [id]);
-   res.send({
-       arrayMunicipios: arrayMunicipios
-   });
-   //console.log(arrayMunicipios);
-})*/
 
 module.exports = router;

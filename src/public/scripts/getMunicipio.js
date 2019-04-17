@@ -1,4 +1,4 @@
-document.getElementById('title').focus();
+document.getElementById('name').focus();
 
 const URI = '/person/getMunicipio';
 

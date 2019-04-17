@@ -3,18 +3,27 @@
         <div class="col-md-10 mx-auto">
             <div class="card text-left">
                 <div class="card-header">
-                    <h3>Edit person</h3>
+                    <h3>Editar persona</h3>
                 </div>
                 <div class="card-body">
                     <form action="/person/edit/{{data.id}}" method="POST">
                         <div class="form-group">
-                            <input id="title" type="text" name="name" placeholder="Name(s)" class="form" value="{{data.name}}">
-                       {{!-- </div>
+                            <label for="name">Nombre(s): </label>
+                            <input type="text" name="name" placeholder="Nombre(s)" size="40%" id="name" value="{{data.name}}">
+                            {{!--</div>
                         <div class="form-group"> --}}
-                            <input type="text" name="apellidoP" placeholder="Lastname" class="form" value="{{data.apellidoP}}">
+
+                            <input type="text" name="lastname" id="lastname" placeholder="Apellido Paterno" size="20%" value="{{data.lastname}}">
+
+                            <input type="text" name="surname" id="surname" placeholder="Apellido Materno" value="{{data.surname}}">
                         </div>
                         <div class="form-group">
-                            <input type="text" name="apellidoM" placeholder="Surname" class="form-control" value="{{data.apellidoM}}">
+                            <label for="birthdate">Fecha de nacimiento: </label>
+                            <input type="text" name="birthdate" id="birthdate" value="{{data.birthdate}}"
+                                placeholder="Fecha de nacimiento" />
+                            <label for="name">CURP: </label>
+                            <input type="text" name="curp" id="curp" placeholder="CURP" onblur="regexCURP()" value="{{data.curp}}"/>
+                            
                         </div>
                         <div class="form-group">
                             <label for="estado">Estado</label>
@@ -35,7 +44,14 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <label for="address" class="text-left">Direccion: </label>
+                            <input type="text" id="address" name="address" placeholder="Calle" size="40" value="{{data.address}}">
+                            <input type="text" id="address_num" name="address_num" placeholder="Numero" value="{{data.address_num}}">
+                            <input type="text" id="address_letter" name="address_letter" placeholder="Int" value="{{data.address_letter}}">
+                            <input type="text" id="cp" name="cp" placeholder="Codigo Postal" value="{{data.cp}}">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="submit" class="btn btn-primary btn-block">Guardar cambios</button>
                         </div>
                     </form>
                 </div>
@@ -44,4 +60,7 @@
     </div>
 </div>
 
+<script src="/scripts/regexCURP.js"></script>
 <script src="/scripts/getMunicipio.js"></script>
+<script src="/scripts/dateTimePickerPersonEdit.js"></script>
+<script src="/scripts/toUpper.js"></script>
