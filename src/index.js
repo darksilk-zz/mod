@@ -9,6 +9,9 @@ const passport = require('passport');
 const {database} = require('./keys');
 const db = require('./database');
 const mongoose = require('mongoose');
+var Agenda = require('agenda');
+var Agendash = require('agendash');
+const CronJob = require('cron').CronJob;
 
 //Initialize
 const app = express();
@@ -54,6 +57,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 //Global variables
 app.use(async (req, res, next) => {
     app.locals.success = req.flash('success');
@@ -70,6 +74,13 @@ app.use('/polls', require('./routes/polls'));
 app.use('/users', require('./routes/users', () => {
     app.locals.user = req.user;
 }));
+
+var agenda = new Agenda(mongoose.connect('mongodb://localhost/encuestas-mongo', { useNewUrlParser: true }));
+// or provide your own mongo client:
+// var agenda = new Agenda({mongo: myMongoClient})
+//router.get('/dash', Agendash(agenda));
+
+app.use('/dash', Agendash(agenda));
 
 //public files
 app.use(express.static(path.join(__dirname, '/public')));

@@ -13,7 +13,7 @@ $(function () {
         endDate: moment(dateEnd, "DD-MM-YYYY HH:mm"),
         locale: {
             separator: "-",
-            format: 'DD/MM/YYYY HH:MM',
+            format: 'DD/MM/YYYY HH:mm',
             "daysOfWeek": [
                 "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"
             ],
@@ -25,13 +25,13 @@ $(function () {
             "firstDay": 1
         }
     }, function (start, end, label) {
-        console.log("Date range: " + start.format('DD/MM/YYYY HH:MM') + ' to ' + end.format('DD/MM/YYY HH:MM'));
-        var date = start.format('YYYY-MM-DDTHH:MM') + ' - ' + end.format('YYYY-MM-DDTHH:MM')
+        console.log("Date range: " + start.format('DD/MM/YYYY HH:mm') + ' to ' + end.format('DD/MM/YYY HH:mm'));
+        var date = start.format('YYYY-MM-DDTHH:mm') + ' - ' + end.format('YYYY-MM-DDTHH:mm')
         var date = date.split(" - ");
         var dateStart = date[0];
         var dateEnd = date[1];
-        var epochStart = moment(dateStart, "DD-MM-YYYY HH:MM").unix();
-        var epochEnd = moment(dateEnd, "DD-MM-YYYY HH:MM").unix();
+        var epochStart = moment(dateStart, "DD-MM-YYYY HH:mm").unix();
+        var epochEnd = moment(dateEnd, "DD-MM-YYYY HH:mm").unix();
         console.log(epochStart);
         console.log(epochEnd);
         console.log(dateStart);

@@ -2,7 +2,34 @@ const express = require('express');
 const router = express.Router();
 const Poll = require('../model/polls');
 const moment = require('moment');
-var mongoose = require("mongoose")
+const CronJob = require('cron').CronJob;
+var cron = require('node-cron');
+
+//new CronJob('*/5 * * * * *', async function() {
+cron.schedule('1 * 1/1 * *', async function() {
+    const polls = await Poll.find({});
+    console.log("\nStarting Cronjob: ");
+    var now = moment().unix();
+    console.log(moment().format(), "     ", now);
+    polls.forEach(async (element,i) => {
+        if(element.active===0){
+            if(now > element.dateStarEpoch && now < element.dateEndEpoch){
+                const result = await Poll.updateOne({_id: element._id }, {active: 1});
+                console.log(result);
+            }else{
+                console.log("Out of range to active", i+1, ":",element.question, 
+                element.dateStart, element.dateStarEpoch, "    ", element.dateEnd, element.dateEndEpoch);
+            }
+        }else{
+            console.log("Active poll", i+1, ":",element.question,
+            element.dateStart, element.dateStarEpoch, "    ", element.dateEnd, element.dateEndEpoch);
+            if(now > element.dateEndEpoch){
+                const result = await Poll.updateOne({_id: element._id }, {active: 0});
+                console.log(result);
+            }
+        }
+    })
+}, null, true, 'America/Mexico_City');
 
 
 const { isLoggedIn, isNotLoggedIn, isLoggedInAdmin } = require('../lib/auth');
@@ -24,14 +51,14 @@ router.get('/add', isLoggedIn, (req, res) => {
 
 router.post('/add', isLoggedIn, async (req, res, next) => {
     var dates = (req.body.dateRange).split("-");
-    var epochStart = moment(dates[0], "DD-MM-YYYY HH:MM").unix();
-    var epochEnd = moment(dates[1], "DD-MM-YYYY HH:MM").unix();
+    var epochStart = moment(dates[0], "DD-MM-YYYY HH:mm").unix();
+    var epochEnd = moment(dates[1], "DD-MM-YYYY HH:mm").unix();
     console.log("date ranges", req.body.dateRange);
     console.log("date start", dates[0]);
     console.log("date end", dates[1]);
     console.log("epoch start", epochStart)
     console.log("epoch end", epochEnd)
-    console.log("epoch end", moment(dates[0], "DD-MM-YYYY HH:MM").format('DD-MM-YYYY HH:MM'))
+    console.log("epoch end", moment(dates[0], "DD-MM-YYYY HH:mm").format('DD-MM-YYYY HH:mm'))
     var poll = new Poll({
         question: req.body.question,
         description: req.body.description,
@@ -60,8 +87,8 @@ router.get('/edit/:_id', isLoggedIn, async (req, res) => {
 router.post('/edit/:id', isLoggedIn, async (req, res, next) => {
     const { id } = req.params;
     var dates = (req.body.dateRange).split("-");
-    var epochStart = moment(dates[0], "DD-MM-YYYY HH:MM").unix();
-    var epochEnd = moment(dates[1], "DD-MM-YYYY HH:MM").unix();
+    var epochStart = moment(dates[0], "DD-MM-YYYY HH:mm").unix();
+    var epochEnd = moment(dates[1], "DD-MM-YYYY HH:mm").unix();
     var answers = req.body.answers;
     answers.forEach((element,i) => {
         if(element === ''){

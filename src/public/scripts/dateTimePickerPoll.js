@@ -4,10 +4,10 @@ $(function () {
         timePicker: true,
         showDropdowns: true,
         timePicker24Hour: true,
-        timePickerIncrement: 60,
-        minDate: moment(),
-        startDate: moment().startOf('hour'),
-        endDate: moment().startOf('hour').add(32, 'hour'),
+        timePickerIncrement: 1,
+        minDate: moment().add(24, 'hour').startOf('day'),
+        startDate: moment().add(24, 'hour').startOf('day'),
+        endDate: moment().startOf('day').add(48, 'hour'),
         locale: {
             separator: "-",
             format: 'DD/MM/YYYY HH:mm',
@@ -22,15 +22,15 @@ $(function () {
             "firstDay": 1
         }
     }, function (start, end, label) {
-        console.log('New date range selected: ' + start.format('YYYY-MM-DD HH:MM') + ' to ' + end.format('YYYY-MM-DD H:m') + ' (predefined range: ' + label + ')');
+        console.log('New date range selected: ' + start.format('YYYY-MM-DD HH:mm') + ' to ' + end.format('YYYY-MM-DD HH:mm') + ' (predefined range: ' + label + ')');
         
-        console.log("Date range: " + start.format('DD/MM/YYYY HH:MM') + ' to ' + end.format('DD/MM/YYY HH:MM'));
-        var date = start.format('YYYY-MM-DDTHH:MM') + ' - ' + end.format('YYYY-MM-DDTHH:MM')
+        console.log("Date range: " + start.format('DD/MM/YYYY HH:mm') + ' to ' + end.format('DD/MM/YYY HH:mm'));
+        var date = start.format('YYYY-MM-DDTHH:mm') + ' - ' + end.format('YYYY-MM-DDTHH:mm')
         var date = date.split(" - ");
         var dateStart = date[0];
         var dateEnd = date[1];
-        var epochStart = moment(dateStart, "DD-MM-YYYY HH:MM").unix();
-        var epochEnd = moment(dateEnd, "DD-MM-YYYY HH:MM").unix();
+        var epochStart = moment(dateStart, "DD-MM-YYYY HH:mm").unix();
+        var epochEnd = moment(dateEnd, "DD-MM-YYYY HH:mm").unix();
         console.log(epochStart);
         console.log(epochEnd);
         console.log(dateStart);
