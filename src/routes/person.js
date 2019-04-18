@@ -79,10 +79,6 @@ router.route('/search')
 
     .post(isLoggedIn, async (req, res) => {
         const toSearch = req.body.toSearch;
-        console.log("buscar esto", toSearch);
-        console.log("buscar esto 2", req.body.toSearch);
-        console.log(toSearch);
-        console.log(req.body);
         
         await db.query(`select person.id, person.name, person.lastname, person.surname, person.active, 
                         estado.nombre as nombreEstado, municipio.nombre as nombreMunicipio,

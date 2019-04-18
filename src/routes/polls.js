@@ -43,7 +43,6 @@ router.get('/view', isLoggedIn, async (req, res) => {
     res.render('./polls/view.hbs', {
         polls,
         user: req.user
-        
     });
 });
 

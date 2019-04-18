@@ -19,7 +19,6 @@ module.exports = mongoose.model('Polls', pollSchema);
 /*const answersSchema = Schema({
     answers: [{}]
 });
-
 const QuestionSchema = Schema({
     question: { type: String, required: true },
     //answers: [answersSchema]

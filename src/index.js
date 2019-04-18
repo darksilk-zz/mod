@@ -28,14 +28,13 @@ app.engine('.hbs', exhbs({
     extname: '.hbs',
     helpers: require('./lib/handlebars')
    /* helpers: {
-        tryi: function(value){
+        test: function(value){
             return value+7;
         }
     }*/
 }));
 app.set('view engine', '.hbs');
 app.set('view engine', 'ejs');
-
 
 //Middlewares
 app.use(session({

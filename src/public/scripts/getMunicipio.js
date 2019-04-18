@@ -11,9 +11,6 @@ $(document).ready(function () {
             data: 'aid=' + aid
         }).done(function (arrayMunicipios) {
             $('#municipio').empty();
-            /*$.each(arrayMunicipios.arrayMunicipios, function (i, p) {
-                $('#municipios').append('<option>' + p.nombre + '</option>')
-            });*/
             arrayMunicipios.arrayMunicipios.forEach(function (municipios) {
                 $('#municipio').append('<option value="' + municipios.id + '">' + municipios.nombre + '</option>')
             });

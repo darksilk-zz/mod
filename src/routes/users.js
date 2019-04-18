@@ -79,4 +79,115 @@ router.put('/validateCURP/:curp', async (req, res) => {
     });
 })
 
+router.route('/search')
+    .get(isLoggedIn, (req, res) => {
+        res.render('./users/search.hbs')
+    })
+
+    .post(isLoggedIn, async (req, res) => {
+        const toSearch = req.body.toSearch;
+        console.log("buscar esto", toSearch);
+        console.log("buscar esto 2", req.body.toSearch);
+        console.log(toSearch);
+        console.log(req.body);
+        
+        await db.query(`select users.id, person.name, person.lastname, person.surname,  
+                        estado.nombre as nombreEstado, municipio.nombre as nombreMunicipio, 
+                        person.curp, users.username, users.active from person as person 
+                        join estados as estado on estado.id=person.estado_id 
+                        join municipios as municipio on municipio.id=person.municipio_id 
+                        join users as users on users.id_person=person.id
+                        where person.name regexp ? or person.curp regexp ?
+                        or users.username regexp ?`, [toSearch,toSearch,toSearch], (err, user) => {
+
+                for (var i = 0; i < user.length; i++) {
+                    if (user[i].active == '1') {
+                        user[i].active = "Si";
+                        
+
+                    } else if (user[i].active == '0') {
+                        user[i].active = "No";
+                    }
+                }
+                console.log(user);
+                res.render('./users/search.hbs', {
+                    data: user
+                })
+            })
+    });
+
+router.get('/deactivate/:id', isLoggedIn, async (req, res, done) => {
+    const { id } = req.params;
+    const deactivate = {
+        active: 0
+    }
+    await db.query("update users set ? where id=?", [deactivate, id], (err, result) => {
+        if (result) {
+            console.log('Insertion Result: ', result);
+            req.flash('success', 'Actualizado correctamente');
+            res.redirect('back');
+        } else if (err) {
+            console.log('AN ERROR OCURRED!: ', err);
+            req.flash('message', 'Ocurrió un error, intenta nuevamente');
+            res.redirect('back');
+        }
+    });
+});
+
+router.get('/activate/:id', isLoggedIn, async (req, res, next) => {
+    const { id } = req.params;
+    const activate = {
+        active: 1
+    }
+    await db.query("update users set ? where id=?", [activate, id], (err, result) => {
+        if (result) {
+            console.log('Insertion Result: ', result);
+            req.flash('success', 'Actualizado correctamente');
+            res.redirect(req.get('referer'));
+        } else if (err) {
+            console.log('AN ERROR OCURRED!: ', err);
+            req.flash('message', 'Ocurrió un error, intenta nuevamente');
+            res.redirect(req.get('referer'));
+        }
+    });
+
+});
+
+router.get('/deactivate/:id', isLoggedIn, async (req, res, done) => {
+    const { id } = req.params;
+    const deactivate = {
+        active: 0
+    }
+    await db.query("update users set ? where id=?", [deactivate, id], (err, result) => {
+        if (result) {
+            console.log('Insertion Result: ', result);
+            req.flash('success', 'Actualizado correctamente');
+            res.redirect('back');
+        } else if (err) {
+            console.log('AN ERROR OCURRED!: ', err);
+            req.flash('message', 'Ocurrió un error, intenta nuevamente');
+            res.redirect('back');
+        }
+    });
+});
+
+router.get('/activate/:id', isLoggedIn, async (req, res, next) => {
+    const { id } = req.params;
+    const activate = {
+        active: 1
+    }
+    await db.query("update users set ? where id=?", [activate, id], (err, result) => {
+        if (result) {
+            console.log('Insertion Result: ', result);
+            req.flash('success', 'Actualizado correctamente');
+            res.redirect(req.get('referer'));
+        } else if (err) {
+            console.log('AN ERROR OCURRED!: ', err);
+            req.flash('message', 'Ocurrió un error, intenta nuevamente');
+            res.redirect(req.get('referer'));
+        }
+    });
+
+});
+
 module.exports = router;
