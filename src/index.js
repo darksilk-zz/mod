@@ -57,7 +57,6 @@ app.use(async (req, res, next) => {
     app.locals.success = req.flash('success');
     app.locals.message = req.flash('message');
     app.locals.user = req.user;
-    console.log(req);
     next();
 });
 

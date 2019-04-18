@@ -30,12 +30,16 @@ router.post('/login', (req, res, next) => {
 router.route('/add')
     .post(isLoggedInAdmin, async (req, res, done) => {
         console.log('Object Received from \'Add\' view: ', req.body)
-        const { id_person, username, password } = req.body;
+        const { id_person, username, password, CURP} = req.body;
 
         const existUser = await db.query('select * from users where username=?', [username]);
+        const existUserCURP = await db.query('select user.id_person, person.curp, person.id from users as user join person as person on person.id=user.id_person where person.curp=?',[CURP]);
 
         if (typeof existUser !== 'undefined' && existUser.length > 0) {
             req.flash('message', 'Nombre de usuario no disponible.');
+            res.redirect('/users/add');
+        }else if (typeof existUserCURP !== 'undefined' && existUserCURP.length > 0) {
+            req.flash('message', 'CURP ya asociada a un usuario.');
             res.redirect('/users/add');
         }
         else {

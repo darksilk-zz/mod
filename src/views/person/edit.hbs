@@ -1,6 +1,6 @@
 <div class="container p-4">
     <div class="row">
-        <div class="col-md-10 mx-auto">
+        <div class="col-md-7 mx-auto">
             <div class="card text-left">
                 <div class="card-header">
                     <h3>Editar persona</h3>
@@ -10,11 +10,7 @@
                         <div class="form-group">
                             <label for="name">Nombre(s): </label>
                             <input type="text" name="name" placeholder="Nombre(s)" size="40%" id="name" value="{{data.name}}">
-                            {{!--</div>
-                        <div class="form-group"> --}}
-
                             <input type="text" name="lastname" id="lastname" placeholder="Apellido Paterno" size="20%" value="{{data.lastname}}">
-
                             <input type="text" name="surname" id="surname" placeholder="Apellido Materno" value="{{data.surname}}">
                         </div>
                         <div class="form-group">
@@ -23,11 +19,10 @@
                                 placeholder="Fecha de nacimiento" />
                             <label for="name">CURP: </label>
                             <input type="text" name="curp" id="curp" placeholder="CURP" onblur="regexCURP()" value="{{data.curp}}"/>
-                            
                         </div>
                         <div class="form-group">
                             <label for="estado">Estado</label>
-                            <select class="form-control" id="estado" name="estado_id" >
+                            <select class="form-control" id="estado" name="estado_id" size="1" style="width:250px">
                                 <option selected="selected" value="{{data.estado_id}}">{{data.nombreEstado}}</option>
                                 {{#each estados}}
                                 <option value="{{id}}">{{nombre}}</option>
@@ -36,7 +31,7 @@
                         </div>
                         <div class="form-group">
                             <label for="municipio" class="text-left">Municipio</label>
-                            <select class="form-control" id="municipio" name="municipio_id">
+                            <select class="form-control" id="municipio" name="municipio_id" size="1" style="width:300px">
                                 <option selected="selected" value="{{data.municipio_id}}">{{data.nombreMunicipio}}</option>
                                 {{#each municipios}}
                                 <option value="{{id}}">{{nombre}}</option>
@@ -45,10 +40,10 @@
                         </div>
                         <div class="form-group">
                             <label for="address" class="text-left">Direccion: </label>
-                            <input type="text" id="address" name="address" placeholder="Calle" size="40" value="{{data.address}}">
-                            <input type="text" id="address_num" name="address_num" placeholder="Numero" value="{{data.address_num}}">
-                            <input type="text" id="address_letter" name="address_letter" placeholder="Int" value="{{data.address_letter}}">
-                            <input type="text" id="cp" name="cp" placeholder="Codigo Postal" value="{{data.cp}}">
+                            <input type="text" id="address" name="address" placeholder="Calle" size="40%"value="{{data.address}}">
+                            <input type="text" id="address_num" name="address_num" placeholder="Numero" size="10%" value="{{data.address_num}}">
+                            <input type="text" id="address_letter" name="address_letter" placeholder="Int" size="10%" value="{{data.address_letter}}">
+                            <input type="text" id="cp" name="cp" placeholder="Codigo Postal" value="{{data.cp}}" size="10%">
                         </div>
                         <div class="form-group">
                             <button type="submit" id="submit" class="btn btn-primary btn-block">Guardar cambios</button>

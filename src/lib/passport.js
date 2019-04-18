@@ -40,18 +40,16 @@ passport.use('local.signin', new LocalStrategy({
         const user = rows[0]; 
         const validPassword = await helpers.decryptPassword(password, user.password);
         if(validPassword){
-            
             console.log("Password is valid");
-            
-            done(null, user, req.flash('success', 'Visto por ultima vez ' + ago.timeagoMoment(user.lastTimeLogged)));
+            done(null, user, req.flash('success', 'Ingresaste por ultima vez ' + ago.timeagoMoment(user.lastTimeLogged)));
             //done(null, user);
         } else {
             console.log("Password is not valid");
-            done(null, false, req.flash('message', 'Invalid password'));
+            done(null, false, req.flash('message', 'Contraseña incorrecta'));
         }
     } else {
         console.log("Username doesnt exist");
-        return done(null, false, req.flash('message', 'Username does not exist'));
+        return done(null, false, req.flash('message', 'Nombre de usuario no existe'));
     }
 }
 ));

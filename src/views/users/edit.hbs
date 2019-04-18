@@ -10,17 +10,12 @@
                         <div class="form-group">
                             <label for="name">Nombre(s): </label>
                             <input type="text" name="name" placeholder="Nombre(s)" size="40%" id="name" value="{{data.name}}">
-                            {{!--</div>
-                        <div class="form-group"> --}}
-
                             <input type="text" name="lastname" id="lastname" placeholder="Apellido Paterno" size="20%" value="{{data.lastname}}">
-
                             <input type="text" name="surname" id="surname" placeholder="Apellido Materno" value="{{data.surname}}">
                         </div>
                         <div class="form-group">
                             <label for="birthdate">Fecha de nacimiento: </label>
-                            <input type="text" name="birthdate" id="birthdate" value="{{data.birthdate}}"
-                                placeholder="Fecha de nacimiento" />
+                            <input type="text" name="birthdate" id="birthdate" value="{{data.birthdate}}" placeholder="Fecha de nacimiento" />
                             <label for="name">CURP: </label>
                             <input type="text" name="curp" id="curp" placeholder="CURP" onblur="regexCURP()" value="{{data.curp}}"/>
                             

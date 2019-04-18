@@ -41,6 +41,7 @@ CREATE TABLE `users` (
     `type` tinyint(1)  NOT NULL ,
     `created_at` datetime  NOT NULL ,
     `created_by` varchar(15)  NOT NULL ,
+    `lastTimeLogged` datetime NOT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `uc_users_username` UNIQUE (`username`)
 );
