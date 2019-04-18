@@ -37,12 +37,11 @@ router.get('/', isLoggedIn, async (req, res) => {
 });
 
 router.get('/view', isLoggedIn, async (req, res) => {
-    const us = req.user
-    console.log(us);
     const polls = await Poll.find({});
+
     res.render('./polls/view.hbs', {
         polls,
-        user: req.user
+        user: req.user,
     });
 });
 
