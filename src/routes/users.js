@@ -62,13 +62,13 @@ router.route('/add')
             });
         }
     })
-    .get(isLoggedInAdmin, async (req, res) => {
+    .get(isLoggedInAdmin, (req, res) => {
         res.render('./users/add.hbs');
     });
 
 router.put('/validateCURP/:curp', async (req, res) => {
     const { curp } = req.params;
-    await db.query('select id from person where name=?', [curp], (err, idPerson) => {
+    await db.query('select id from person where curp=?', [curp], (err, idPerson) => {
         if (err) {
             console.log(err);
         } else {
@@ -86,10 +86,6 @@ router.route('/search')
 
     .post(isLoggedIn, async (req, res) => {
         const toSearch = req.body.toSearch;
-        console.log("buscar esto", toSearch);
-        console.log("buscar esto 2", req.body.toSearch);
-        console.log(toSearch);
-        console.log(req.body);
         
         await db.query(`select users.id, person.name, person.lastname, person.surname,  
                         estado.nombre as nombreEstado, municipio.nombre as nombreMunicipio, 
