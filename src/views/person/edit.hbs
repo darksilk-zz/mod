@@ -1,59 +1,83 @@
-<div class="container p-4">
-    <div class="row">
-        <div class="col-md-7 mx-auto">
-            <div class="card text-left">
-                <div class="card-header">
-                    <h3>Editar persona</h3>
-                </div>
-                <div class="card-body">
-                    <form action="/person/edit/{{data.id}}" method="POST">
-                        <div class="form-group">
-                            <label for="name">Nombre(s): </label>
-                            <input type="text" name="name" placeholder="Nombre(s)" size="40%" id="name" value="{{data.name}}">
-                            <input type="text" name="lastname" id="lastname" placeholder="Apellido Paterno" size="20%" value="{{data.lastname}}">
-                            <input type="text" name="surname" id="surname" placeholder="Apellido Materno" value="{{data.surname}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="birthdate">Fecha de nacimiento: </label>
-                            <input type="text" name="birthdate" id="birthdate" value="{{data.birthdate}}"
-                                placeholder="Fecha de nacimiento" />
-                            <label for="name">CURP: </label>
-                            <input type="text" name="curp" id="curp" placeholder="CURP" onblur="regexCURP()" value="{{data.curp}}"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="estado">Estado</label>
-                            <select class="form-control" id="estado" name="estado_id" size="1" style="width:250px">
-                                <option selected="selected" value="{{data.estado_id}}">{{data.nombreEstado}}</option>
-                                {{#each estados}}
-                                <option value="{{id}}">{{nombre}}</option>
-                                {{/each}}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="municipio" class="text-left">Municipio</label>
-                            <select class="form-control" id="municipio" name="municipio_id" size="1" style="width:300px">
-                                <option selected="selected" value="{{data.municipio_id}}">{{data.nombreMunicipio}}</option>
-                                {{#each municipios}}
-                                <option value="{{id}}">{{nombre}}</option>
-                                {{/each}}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="address" class="text-left">Direccion: </label>
-                            <input type="text" id="address" name="address" placeholder="Calle" size="40%"value="{{data.address}}">
-                            <input type="text" id="address_num" name="address_num" placeholder="Numero" size="10%" value="{{data.address_num}}">
-                            <input type="text" id="address_letter" name="address_letter" placeholder="Int" size="10%" value="{{data.address_letter}}">
-                            <input type="text" id="cp" name="cp" placeholder="Codigo Postal" value="{{data.cp}}" size="10%">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" id="submit" class="btn btn-primary btn-block">Guardar cambios</button>
-                        </div>
-                    </form>
+<header class="download bg-primary text-center"
+    style="height: 89vh; min-height: 730px; padding-top: 0; padding-bottom: 0; background: linear-gradient(to left,#7b4397,#dc2430);">
+    <div class="container h-100" style="padding-top: 10%;">
+        <div class="row">
+            <div class="col-md-7 mx-auto">
+                {{> flashMsgs }}
+                <div class="card text-left">
+                    <div class="card-header">
+                        <h3>Editar persona</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/person/edit/{{data.id}}" method="POST">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="name">Nombre(s): </label>
+                                    <input type="text" name="name" placeholder="Nombre(s)" id="name" class="form-control" value="{{data.name}}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="lastname">Apellido paterno: </label>
+                                    <input type="text" name="lastname" id="lastname" placeholder="Apellido Paterno" class="form-control" value="{{data.lastname}}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="surname">Apellido materno: </label>
+                                    <input type="text" name="surname" id="surname" placeholder="Apellido Materno" class="form-control" value="{{data.surname}}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="birthdate">Fecha de nacimiento: </label>
+                                    <input type="date" name="birthdate" id="birthdate" placeholder="Fecha de nacimiento" class="form-control" value="{{data.birthdate}}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="curp">CURP: </label>
+                                    <input type="text" name="curp" id="curp" value="" placeholder="CURP" onblur="regexCURP()" class="form-control" value="{{data.curp}}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="estado">Estado: </label>
+                                    <select id="estado" name="estado_id" class="form-control">
+                                        <option selected="selected" value="{{data.estado_id}}">{{data.nombreEstado}}
+                                        </option>
+                                        {{#each estados}}
+                                        <option value="{{id}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="municipio" class="text-left">Municipio: </label>
+                                    <select id="municipio" name="municipio_id" class="form-control">
+                                        <option selected="selected" value="{{data.municipio_id}}">{{data.nombreMunicipio}}
+                                        </option>
+                                        {{#each municipios}}
+                                        <option value="{{id}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="address">Calle: </label>
+                                    <input type="text" id="address" name="address" placeholder="Calle" class="form-control"  value="{{data.address}}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="address">Exterior: </label>
+                                    <input type="text" id="address_num" name="address_num" placeholder="Ext" class="form-control"  value="{{data.address_num}}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="address">Interior: </label>
+                                    <input type="text" id="address_letter" name="address_letter" placeholder="Int" class="form-control"  value="{{data.address_letter}}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="address">CP: </label>
+                                    <input type="text" id="cp" name="cp" placeholder="CP" class="form-control"  value="{{data.cp}}">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</header>
 
 <script src="/scripts/regexCURP.js"></script>
 <script src="/scripts/getMunicipio.js"></script>

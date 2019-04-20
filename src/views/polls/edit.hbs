@@ -1,56 +1,56 @@
-{{!--
-{{#with polls.[0]}}
-  {{question}}
-{{/with}}
---}}
-
-<body ng-app="addPoll">
-    <div ng-controller="pollCtrl" class="container p-4">
+<header class="download bg-primary text-center" ng-app="addPoll"
+    style="height: 89vh; min-height: 730px; padding-top: 0; padding-bottom: 0; background: linear-gradient(to left,#7b4397,#dc2430);">
+    <div class="container h-100" ng-controller="pollCtrl" style="padding-top: 10%;">
         <div class="row">
-            <div class="col-md-6 mt-5">
-                <form action="/polls/edit/{{polls.0._id}}" method="POST">
-                    <div class="form-group">
-                        <label for="question">Nombre: </label>
-                        <input type="text" name="question" id="question" value="{{polls.0.question}}">
-                        </br>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">Descripcion: </label>
-                        <input type="text" name="description" id="description" value="{{polls.0.description}}">
-                        </br>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="dateRange">Fecha/Hora de inicio y fin: </label>
-                        <input type="text" name="dateRange" id="daterange" value="01/01/2018 - 01/15/2018"
-                            placeholder="Ingresa una respuesta" class="form-control" />
-                        <input type="hidden" value="{{polls.0.dateStart}}" name="start" id="start" disabled>
-                        <input type="hidden" value="{{polls.0.dateEnd}}" name="end" id="end" disabled>
-
-                        {{#each polls.0.answers}}
+            <div class="card text-left">
+                <div class="card-header">
+                    <h3>Editar encuesta</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/polls/edit/{{polls.0._id}}" method="POST">
                         <div class="form-group">
-                            Respuesta {{math @index "+" 1}}:
-                            <input type="text" name="answers" value="{{this}}">
+                            <label for="question">Nombre: </label>
+                            <input type="text" name="question" id="question" value="{{polls.0.question}}">
                             </br>
                         </div>
-                        {{/each}}
 
-                        <div class="form-group" data-ng-repeat="answer in choices">
-                            <input type="text" ng-model="answers" name="answers" id="answers"
-                                placeholder="Agregar respuesta" class="form-control" />
+                        <div class="form-group">
+                            <label for="description">Descripcion: </label>
+                            <input type="text" name="description" id="description" value="{{polls.0.description}}">
+                            </br>
                         </div>
 
-                        <div>
-                            <button type="button" class="mb-sm btn btn-primary" ng-click="addChoice()">Agregar otra
-                                respuesta</button>
-                            <button type="submit" class="mb-sm btn btn-success">Guardar Cambios</button>
-                        </div>
-                </form>
+                        <div class="form-group">
+                            <label for="dateRange">Fecha/Hora de inicio y fin: </label>
+                            <input type="text" name="dateRange" id="daterange" value="01/01/2018 - 01/15/2018"
+                                placeholder="Ingresa una respuesta" class="form-control" />
+                            <input type="hidden" value="{{polls.0.dateStart}}" name="start" id="start" disabled>
+                            <input type="hidden" value="{{polls.0.dateEnd}}" name="end" id="end" disabled>
+
+                            {{#each polls.0.answers}}
+                            <div class="form-group">
+                                Respuesta {{math @index "+" 1}}:
+                                <input type="text" name="answers" value="{{this}}">
+                                </br>
+                            </div>
+                            {{/each}}
+
+                            <div class="form-group" data-ng-repeat="answer in choices">
+                                <input type="text" ng-model="answers" name="answers" id="answers"
+                                    placeholder="Agregar respuesta" class="form-control" />
+                            </div>
+
+                            <div>
+                                <button type="button" class="mb-sm btn btn-primary" ng-click="addChoice()">Agregar otra
+                                    respuesta</button>
+                                <button type="submit" class="mb-sm btn btn-success">Guardar Cambios</button>
+                            </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</body>
+</header>
 
 
 <script src="/scripts/addAnswerButton.js"></script>

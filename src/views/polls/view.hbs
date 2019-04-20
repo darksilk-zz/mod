@@ -1,34 +1,37 @@
-<div class="container mt-3">
-    <div class="card-deck">
-        {{#each polls}}
-        <div class="text-left card border-dark mb-3">
-            <div class="card-header">
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled">
-                    <li>
-                        <h3>{{math @index "+" 1}}: {{question}}</h3>
-                    </li>
-                    <li>Fecha de inicio: {{dateStart}}</li>
-                    <li>Fecha de termino: {{dateEnd}} </li>
-                    <li>Respuestas:
-                        <ul>
-                            {{#each answers}}
-                            <li>{{this}}</br></li>
-                            {{/each}}
-                        </ul>
-                    </li>
-                    <li>Creada por: {{created_by}}</li>
-                    <li>Creada en: {{createdAt created_at}} </li>
-                    <li>Activo: {{isActive active}} </li>
-                </ul>
+<header class="download bg-primary text-center"
+    style="height: 89vh; min-height: 730px; padding-top: 0; padding-bottom: 0; background: linear-gradient(to left,#7b4397,#dc2430);">
+    <div class="container h-100" style="padding-top: 10%;">
+        <div class="card-deck">
+            {{#each polls}}
+            <div class="text-left card border-dark mb-3">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li>
+                            <h3>{{math @index "+" 1}}: {{question}}</h3>
+                        </li>
+                        <li>Fecha de inicio: {{dateStart}}</li>
+                        <li>Fecha de termino: {{dateEnd}} </li>
+                        <li>Respuestas:
+                            <ul>
+                                {{#each answers}}
+                                <li>{{this}}</br></li>
+                                {{/each}}
+                            </ul>
+                        </li>
+                        <li>Creada por: {{created_by}}</li>
+                        <li>Creada en: {{createdAt created_at}} </li>
+                        <li>Activo: {{isActive active}} </li>
+                    </ul>
 
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="./edit/{{_id}}" class="btn btn-outline-primary">Editar</a>
+                    <a href="./delete/{{_id}}" class="btn btn-outline-danger">Borrar</a>
+                </div>
             </div>
-            <div class="card-footer bg-transparent">
-                <a href="./edit/{{_id}}" class="btn btn-outline-primary">Editar</a>
-                <a href="./delete/{{_id}}" class="btn btn-outline-danger">Borrar</a>
-            </div>
+            {{/each}}
         </div>
-        {{/each}}
     </div>
-</div>
+</header>
