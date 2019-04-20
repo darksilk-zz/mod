@@ -1,21 +1,23 @@
-<div class="container">
-    <div class="row mt-5">
-        <div class="col-md-8">
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <td>Nombre</td>
-                        <td>Apellido</td>
-                        <td>Apellido</td>
-                        <td>CURP</td>
-                        <td>Estado</td>
-                        <td>Municipio</td>
-                        <td>Activo</td>
-                        <td>Acciones</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#if data}}
+<header class="download bg-primary text-center"
+    style="height: 89vh; min-height: 730px; padding-top: 0; padding-bottom: 0; background: linear-gradient(to left,#7b4397,#dc2430);">
+    <div class="container h-100" style="padding-top: 10%;">
+        <div class="row mt-12">
+            <div class="col-md-9">
+                <table class="table table-bordered table-hover" style="background-color: white;">
+                    <thead>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>Apellido</td>
+                            <td>Apellido</td>
+                            <td>CURP</td>
+                            <td>Estado</td>
+                            <td>Municipio</td>
+                            <td>Activo</td>
+                            <td>Acciones</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#if data}}
                         {{#each data}}
                         <tr>
                             <td>{{name}}</td>
@@ -26,34 +28,35 @@
                             <td>{{nombreMunicipio}}</td>
                             <td>{{active}}</td>
                             <td>
-                                <a href="./edit/{{id}}" class="btn btn-outline-info">Editar</a>
+                                <a href="./edit/{{id}}" class="btn btn-outline-info" style="font-size: 10px; width: 48%;">Editar</a>
                                 {{#ifCond active '==' "Si"}}
-                                    <a href="./deactivate/{{id}}" class="btn btn-danger">Desactivar</a>
+                                <a href="./deactivate/{{id}}" class="btn btn-danger" style="font-size: 10px; width: 48%;">Desactivar</a>
                                 {{/ifCond}}
                                 {{#ifCond active '==' "No"}}
-                                    <a href="./activate/{{id}}" class="btn btn-success">Activar</a>
+                                <a href="./activate/{{id}}" class="btn btn-success" style="font-size: 10px; width: 48%;">Activar</a>
                                 {{/ifCond}}
                             </td>
                         </tr>
                         {{/each}}
-                    {{/if}}
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <form action="./search" method="POST">
-                        <div class="form-group">
-                            <input type="text" placeholder="Ej. Jose" valu="" name="toSearch" id="toSearch">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Buscar nombre</button>
-                    </form>
+                        {{/if}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="./search" method="POST">
+                            <div class="form-group">
+                                <input type="text" placeholder="Ej. Jose" valu="" name="toSearch" id="toSearch" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Buscar nombre</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</header>
 
 <script type="text/javascript">
     document.getElementById('toSearch').focus();
