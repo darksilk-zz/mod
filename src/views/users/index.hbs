@@ -1,7 +1,14 @@
-<header class="download bg-primary text-center" style="height: 89vh; min-height: 730px; padding-top: 0; padding-bottom: 0; background: linear-gradient(to left,#7b4397,#dc2430);">
-    <div class="container h-100"style="padding-top: 10%;">
-        <div class="mt-5">
-            <h3>Bienvenido {{user.username}} </h3></p>
+<header class="download bg-primary text-center"
+    style="height: 89vh; min-height: 730px; padding-top: 0; padding-bottom: 0; background: linear-gradient(to left,#7b4397,#dc2430);">
+    <div class="container h-100" style="padding-top: 10%;">
+        <div class="row justify-content-md-center">
+            <div class="col-md-8">
+                {{> flashMsgs }}
+                <div class="mt-5">
+                    <h3>Bienvenido {{user.username}} </h3>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </header>
