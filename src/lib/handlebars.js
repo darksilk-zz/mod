@@ -27,6 +27,22 @@ helpers.isActive = (active) => {
     }
 }
 
+helpers.isUser = (type,options) => {
+    if(type==1 || type==2){
+        return true ? options.fn(this) : options.inverse(this);
+    }else{
+        return false ? options.fn(this) : options.inverse(this);
+    }
+}
+
+helpers.isPerson = (type,options) => {
+    if(type==3){
+        return true ? options.fn(this) : options.inverse(this);
+    }else{
+        return false ? options.fn(this) : options.inverse(this);
+    }
+}
+
 helpers.ifCond = function (v1, operator, v2, options) {
     switch (operator) {
         case '==':

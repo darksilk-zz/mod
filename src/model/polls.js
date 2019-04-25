@@ -14,6 +14,12 @@ const pollSchema = Schema({
   answers: [{}]
 });
 
+const voteControlSchema = Schema({
+  person_id: String,
+  polls:[{}]
+});
+
+module.exports = mongoose.model('VoteControl', voteControlSchema);
 module.exports = mongoose.model('Polls', pollSchema);
 
 /*const answersSchema = Schema({

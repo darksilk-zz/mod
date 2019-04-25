@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Finger Vote {{#if user}} ({{user.username}}) {{/if}}</a>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Finger Vote {{#if user}} ({{user.username}})
+            {{/if}}</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -13,6 +14,19 @@
                     <a class="nav-link js-scroll-trigger" href="/">Inicio <span class="sr-only">(current)</span></a>
                 </li>
                 {{#if user}}
+                {{#isPerson user.type}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Votar
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/vote/welcome">Inicio</a>
+                        <a class="dropdown-item" href="/vote/polls">Votacion</a>
+                    </div>
+                </li>
+                {{/isPerson}}
+                {{#isUser user.type}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,6 +47,7 @@
                         <a class="dropdown-item" href="/polls/view">Ver encuestas</a>
                     </div>
                 </li>
+                {{/isUser}}
                 {{#ifCond user.type '==' "1"}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -50,7 +65,8 @@
                 </li>
                 {{else}}
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="/users/login">Entrar <span class="sr-only">(current)</span></a>
+                    <a class="nav-link js-scroll-trigger" href="/users/login">Entrar <span
+                            class="sr-only">(current)</span></a>
                 </li>
                 {{/if}}
             </ul>

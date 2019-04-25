@@ -1,0 +1,33 @@
+<header class="download bg-primary text-center"
+    style="height: 89vh; min-height: 730px; padding-top: 0; padding-bottom: 0; background: linear-gradient(to left,#7b4397,#dc2430);">
+    <div class="container h-100" style="padding-top: 10%;">
+        <div class="card-deck">
+            {{#each polls}}
+            {{#ifCond active '==' "1"}}
+            <div class="text-left card border-dark mb-3">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li>
+                            <h3>{{math @index "+" 1}}: {{question}}</h3>
+                        </li>
+                        <li>Respuestas:
+                            <ul>
+                                {{#each answers}}
+                                <li>{{this}}</br></li>
+                                {{/each}}
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="./vote/{{_id}}" class="btn btn-outline-primary">Presiona aqui para votar</a>
+                </div>
+            </div>
+            {{/ifCond}}
+            {{/each}}
+        </div>
+    </div>
+</header>

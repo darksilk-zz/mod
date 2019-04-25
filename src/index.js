@@ -5,10 +5,11 @@ const exhbs = require('express-handlebars');
 const flash = require('connect-flash');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session');
-const passport = require('passport');
 const {database} = require('./keys');
 const db = require('./database');
 const mongoose = require('mongoose');
+const passport = require('passport');
+//var Passport = require('passport').Passport, passport = new Passport(), personPassport = new Passport();
 
 //Initialize
 const app = express();
@@ -45,12 +46,18 @@ app.use(session({
 }));
 
 app.use(flash());
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
  /*aceptar dsde formularios los datos que envian los usuarios*/
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+
 app.use(passport.initialize());
 app.use(passport.session());
+
+/*
+app.use(passportPerson.initialize());
+app.use(passportPerson.session());
+*/
 
 //Global variables
 app.use(async (req, res, next) => {
@@ -65,6 +72,7 @@ app.use(require('./routes'));
 app.use(require('./routes/auth'))
 app.use('/person', require('./routes/person'));
 app.use('/polls', require('./routes/polls'));
+app.use('/vote', require('./routes/vote'));
 app.use('/users', require('./routes/users', () => {
     app.locals.user = req.user;
 }));

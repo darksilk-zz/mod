@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../database');
 const passport = require('passport');
 const helpers = require('../lib/helpers');
-const { isLoggedIn, isNotLoggedIn, isLoggedInAdmin } = require('../lib/auth');
+const { isLoggedInUser } = require('../lib/auth');
 
 
 router.get('/', (req, res) => {
@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 });
 
 router.route('/add')
-    .post(isLoggedIn, async (req, res) => {
+    .post(isLoggedInUser, async (req, res) => {
         console.log('Object Received from \'Add\' view: ', req.body)
         const { name, lastname, surname, birthdate, curp,
             estado, municipio, cp, address, address_num,
@@ -54,7 +54,7 @@ router.route('/add')
         }
     })
 
-    .get(isLoggedIn, async (req, res) => {
+    .get(isLoggedInUser, async (req, res) => {
         //const arrayEstados = JSON.stringify(await db.query('select id, nombre from estados'));
         const arrayEstados = await db.query('select id, nombre from estados');
         res.render('./person/add.hbs', {
@@ -63,7 +63,7 @@ router.route('/add')
         );
     });
 
-router.put('/getMunicipio/:id', isLoggedIn, async (req, res) => {
+router.put('/getMunicipio/:id', isLoggedInUser, async (req, res) => {
     //console.log(req.body, req.params);
     const { id } = req.params;
     const arrayMunicipios = await db.query('select id, estado_id, nombre from municipios where estado_id= ?', [id]);
@@ -73,11 +73,11 @@ router.put('/getMunicipio/:id', isLoggedIn, async (req, res) => {
 })
 
 router.route('/search')
-    .get(isLoggedIn, (req, res) => {
+    .get(isLoggedInUser, (req, res) => {
         res.render('./person/search.hbs')
     })
 
-    .post(isLoggedIn, async (req, res) => {
+    .post(isLoggedInUser, async (req, res) => {
         const toSearch = req.body.toSearch;
         
         await db.query(`select person.id, person.name, person.lastname, person.surname, person.active, 
@@ -104,7 +104,7 @@ router.route('/search')
             })
     });
 
-router.get('/edit/:id', isLoggedIn, async (req, res) => {
+router.get('/edit/:id', isLoggedInUser, async (req, res) => {
     const { id } = req.params;
     await db.query("select * from person where id = ?", [id], async (err, person) => {
         personData = await db.query(`select person.*, estado.nombre as nombreEstado, municipio.nombre as nombreMunicipio 
@@ -122,7 +122,7 @@ router.get('/edit/:id', isLoggedIn, async (req, res) => {
     })
 });
 
-router.post('/edit/:id', isLoggedIn, async (req, res) => {
+router.post('/edit/:id', isLoggedInUser, async (req, res) => {
     const { id } = req.params;
     /*const { name, lastname, surname, birthdate, curp,
         estado, municipio, cp, address, address_num,
@@ -157,7 +157,7 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
     });
 });
 
-router.get('/deactivate/:id', isLoggedIn, async (req, res, done) => {
+router.get('/deactivate/:id', isLoggedInUser, async (req, res, done) => {
     const { id } = req.params;
     const deactivate = {
         active: 0
@@ -175,7 +175,7 @@ router.get('/deactivate/:id', isLoggedIn, async (req, res, done) => {
     });
 });
 
-router.get('/activate/:id', isLoggedIn, async (req, res, next) => {
+router.get('/activate/:id', isLoggedInUser, async (req, res, next) => {
     const { id } = req.params;
     const activate = {
         active: 1

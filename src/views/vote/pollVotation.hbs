@@ -1,0 +1,29 @@
+<header class="download bg-primary text-center"
+    style="height: 89vh; min-height: 730px; padding-top: 0; padding-bottom: 0; background: linear-gradient(to left,#7b4397,#dc2430);">
+    <div class="container h-100" style="padding-top: 10%;">
+        <div class="card-deck">
+            {{#each polls}}
+            <form action="/vote/saveVote/{{_id}}" method="POST">
+                <div class="text-left card border-dark mb-3">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body">
+                        <h3>{{question}}</h3>
+                        <div id="votation">
+                            <p>Respuestas:</p>
+                            {{#each answers}}
+                            <label><input type="radio" name="chosenAnswer" value="{{this}}"><span>{{this}}</span></label>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <button type="submit" class="mb-sm btn btn-success">PRESIONA PARA VOTAR!</button>
+                    </div>
+                </div>
+                {{/each}}
+            </form>
+        </div>
+    </div>
+</header>
+
+<link rel="stylesheet" type="text/css" href="/css/votationButtons.css" />

@@ -4,39 +4,13 @@ const Poll = require('../model/polls');
 const moment = require('moment');
 const CronJob = require('cron').CronJob;
 var cron = require('node-cron');
-const { isLoggedIn, isNotLoggedIn, isLoggedInAdmin } = require('../lib/auth');
+const { isLoggedInUser } = require('../lib/auth');
 
-//new CronJob('*/5 * * * * *', async function() {
-cron.schedule('1 * 1/1 * *', async function() {
-    const polls = await Poll.find({});
-    console.log("\nStarting Cronjob: ");
-    var now = moment().unix();
-    console.log(moment().format(), "     ", now);
-    polls.forEach(async (element,i) => {
-        if(element.active===0){
-            if(now > element.dateStarEpoch && now < element.dateEndEpoch){
-                const result = await Poll.updateOne({_id: element._id }, {active: 1});
-                console.log(result);
-            }else{
-                console.log("Out of range to active", i+1, ":",element.question, 
-                element.dateStart, element.dateStarEpoch, "    ", element.dateEnd, element.dateEndEpoch);
-            }
-        }else{
-            console.log("Active poll", i+1, ":",element.question,
-            element.dateStart, element.dateStarEpoch, "    ", element.dateEnd, element.dateEndEpoch);
-            if(now > element.dateEndEpoch){
-                const result = await Poll.updateOne({_id: element._id }, {active: 0});
-                console.log(result);
-            }
-        }
-    })
-}, null, true, 'America/Mexico_City');
-
-router.get('/', isLoggedIn, async (req, res) => {
+router.get('/', isLoggedInUser, async (req, res) => {
     res.send("Hello");
 });
 
-router.get('/view', isLoggedIn, async (req, res) => {
+router.get('/view', isLoggedInUser, async (req, res) => {
     const polls = await Poll.find({});
 
     res.render('./polls/view.hbs', {
@@ -45,11 +19,11 @@ router.get('/view', isLoggedIn, async (req, res) => {
     });
 });
 
-router.get('/add', isLoggedIn, (req, res) => {
+router.get('/add', isLoggedInUser, (req, res) => {
     res.render('./polls/add.hbs');
 });
 
-router.post('/add', isLoggedIn, async (req, res, next) => {
+router.post('/add', isLoggedInUser, async (req, res, next) => {
     var dates = (req.body.dateRange).split("-");
     var epochStart = moment(dates[0], "DD-MM-YYYY HH:mm").unix();
     var epochEnd = moment(dates[1], "DD-MM-YYYY HH:mm").unix();
@@ -76,7 +50,7 @@ router.post('/add', isLoggedIn, async (req, res, next) => {
     res.redirect('./add');
 });
 
-router.get('/edit/:_id', isLoggedIn, async (req, res) => {
+router.get('/edit/:_id', isLoggedInUser, async (req, res) => {
     const { _id } = req.params;
     const polls = await Poll.find({ _id: _id });
     res.render('./polls/edit.hbs', {
@@ -84,7 +58,7 @@ router.get('/edit/:_id', isLoggedIn, async (req, res) => {
     });
 });
 
-router.post('/edit/:id', isLoggedIn, async (req, res, next) => {
+router.post('/edit/:id', isLoggedInUser, async (req, res, next) => {
     const { id } = req.params;
     var dates = (req.body.dateRange).split("-");
     var epochStart = moment(dates[0], "DD-MM-YYYY HH:mm").unix();
@@ -122,10 +96,36 @@ router.post('/edit/:id', isLoggedIn, async (req, res, next) => {
     );
 });
 
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', isLoggedInUser, async (req, res) => {
     const { id } = req.params;
     await Poll.deleteOne({_id: id});
     res.redirect('/polls/view');
 })
+
+//new CronJob('*/5 * * * * *', async function() {
+    cron.schedule('1 * 1/1 * *', async function() {
+        const polls = await Poll.find({});
+        console.log("\nStarting Cronjob: ");
+        var now = moment().unix();
+        console.log(moment().format(), "     ", now);
+        polls.forEach(async (element,i) => {
+            if(element.active===0){
+                if(now > element.dateStarEpoch && now < element.dateEndEpoch){
+                    const result = await Poll.updateOne({_id: element._id }, {active: 1});
+                    console.log(result);
+                }else{
+                    console.log("Out of range to active", i+1, ":",element.question, 
+                    element.dateStart, element.dateStarEpoch, "    ", element.dateEnd, element.dateEndEpoch);
+                }
+            }else{
+                console.log("Active poll", i+1, ":",element.question,
+                element.dateStart, element.dateStarEpoch, "    ", element.dateEnd, element.dateEndEpoch);
+                if(now > element.dateEndEpoch){
+                    const result = await Poll.updateOne({_id: element._id }, {active: 0});
+                    console.log(result);
+                }
+            }
+        })
+    }, null, true, 'America/Mexico_City');
 
 module.exports = router;

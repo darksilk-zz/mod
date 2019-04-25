@@ -70,7 +70,7 @@ router.route('/add')
         res.render('./users/add.hbs');
     });
 
-router.put('/validateCURP/:curp', async (req, res) => {
+router.put('/validateCURP/:curp', isLoggedInAdmin, async (req, res) => {
     const { curp } = req.params;
     await db.query('select id from person where curp=?', [curp], (err, idPerson) => {
         if (err) {
@@ -84,11 +84,11 @@ router.put('/validateCURP/:curp', async (req, res) => {
 })
 
 router.route('/search')
-    .get(isLoggedIn, (req, res) => {
+    .get(isLoggedInAdmin, (req, res) => {
         res.render('./users/search.hbs')
     })
 
-    .post(isLoggedIn, async (req, res) => {
+    .post(isLoggedInAdmin, async (req, res) => {
         const toSearch = req.body.toSearch;
         
         await db.query(`select users.id, person.name, person.lastname, person.surname,  
@@ -116,7 +116,7 @@ router.route('/search')
             })
     });
 
-router.get('/deactivate/:id', isLoggedIn, async (req, res, done) => {
+router.get('/deactivate/:id', isLoggedInAdmin, async (req, res, done) => {
     const { id } = req.params;
     const deactivate = {
         active: 0
@@ -134,7 +134,7 @@ router.get('/deactivate/:id', isLoggedIn, async (req, res, done) => {
     });
 });
 
-router.get('/activate/:id', isLoggedIn, async (req, res, next) => {
+router.get('/activate/:id', isLoggedInAdmin, async (req, res, next) => {
     const { id } = req.params;
     const activate = {
         active: 1
@@ -153,7 +153,7 @@ router.get('/activate/:id', isLoggedIn, async (req, res, next) => {
 
 });
 
-router.get('/deactivate/:id', isLoggedIn, async (req, res, done) => {
+router.get('/deactivate/:id', isLoggedInAdmin, async (req, res, done) => {
     const { id } = req.params;
     const deactivate = {
         active: 0
@@ -171,7 +171,7 @@ router.get('/deactivate/:id', isLoggedIn, async (req, res, done) => {
     });
 });
 
-router.get('/activate/:id', isLoggedIn, async (req, res, next) => {
+router.get('/activate/:id', isLoggedInAdmin, async (req, res, next) => {
     const { id } = req.params;
     const activate = {
         active: 1

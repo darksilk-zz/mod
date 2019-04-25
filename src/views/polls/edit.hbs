@@ -13,20 +13,17 @@
                             <input type="text" name="question" id="question" value="{{polls.0.question}}">
                             </br>
                         </div>
-
                         <div class="form-group">
                             <label for="description">Descripcion: </label>
                             <input type="text" name="description" id="description" value="{{polls.0.description}}">
                             </br>
                         </div>
-
                         <div class="form-group">
                             <label for="dateRange">Fecha/Hora de inicio y fin: </label>
                             <input type="text" name="dateRange" id="daterange" value="01/01/2018 - 01/15/2018"
                                 placeholder="Ingresa una respuesta" class="form-control" />
                             <input type="hidden" value="{{polls.0.dateStart}}" name="start" id="start" disabled>
                             <input type="hidden" value="{{polls.0.dateEnd}}" name="end" id="end" disabled>
-
                             {{#each polls.0.answers}}
                             <div class="form-group">
                                 Respuesta {{math @index "+" 1}}:
@@ -34,12 +31,10 @@
                                 </br>
                             </div>
                             {{/each}}
-
                             <div class="form-group" data-ng-repeat="answer in choices">
                                 <input type="text" ng-model="answers" name="answers" id="answers"
                                     placeholder="Agregar respuesta" class="form-control" />
                             </div>
-
                             <div>
                                 <button type="button" class="mb-sm btn btn-primary" ng-click="addChoice()">Agregar otra
                                     respuesta</button>
