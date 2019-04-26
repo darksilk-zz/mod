@@ -27,12 +27,6 @@ router.post('/add', isLoggedInUser, async (req, res, next) => {
     var dates = (req.body.dateRange).split("-");
     var epochStart = moment(dates[0], "DD-MM-YYYY HH:mm").unix();
     var epochEnd = moment(dates[1], "DD-MM-YYYY HH:mm").unix();
-    console.log("date ranges", req.body.dateRange);
-    console.log("date start", dates[0]);
-    console.log("date end", dates[1]);
-    console.log("epoch start", epochStart)
-    console.log("epoch end", epochEnd)
-    console.log("epoch end", moment(dates[0], "DD-MM-YYYY HH:mm").format('DD-MM-YYYY HH:mm'))
     var poll = new Poll({
         question: req.body.question,
         description: req.body.description,
@@ -43,6 +37,7 @@ router.post('/add', isLoggedInUser, async (req, res, next) => {
         active: 0,
         created_at: new Date(),
         created_by: req.user.username,
+        scopeSex: req.body.scopeSex,
         answers: req.body.answers
     });
 
@@ -64,6 +59,7 @@ router.post('/edit/:id', isLoggedInUser, async (req, res, next) => {
     var epochStart = moment(dates[0], "DD-MM-YYYY HH:mm").unix();
     var epochEnd = moment(dates[1], "DD-MM-YYYY HH:mm").unix();
     var answers = req.body.answers;
+    console.log("Answer", answers)
     answers.forEach((element,i) => {
         if(element === ''){
             answers.splice(i, 1);

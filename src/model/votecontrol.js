@@ -1,21 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const pollSchema = Schema({
-  question: String,
-  description: String, 
-  dateStart: String,
-  dateEnd: String,
-  dateStarEpoch: String, 
-  dateEndEpoch: String,
-  active: Number,
-  created_at: Date,
-  created_by: String,
-  scopeSex: String,
-  answers: [{}]
+const voteControlSchema = Schema({
+  person_id: String,
+  polls:[{}]
 });
 
-module.exports = mongoose.model('Polls', pollSchema);
+module.exports = mongoose.model('VoteControl', voteControlSchema);
 
 /*const answersSchema = Schema({
     answers: [{}]

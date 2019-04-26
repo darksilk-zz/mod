@@ -1,21 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const pollSchema = Schema({
+const votationSchema = Schema({
+  poll_id: String,
   question: String,
-  description: String, 
-  dateStart: String,
-  dateEnd: String,
-  dateStarEpoch: String, 
-  dateEndEpoch: String,
-  active: Number,
-  created_at: Date,
-  created_by: String,
-  scopeSex: String,
-  answers: [{}]
+  answer: String,
+  municipio: String,
+  estado: String,
+  sex: String,
+  age: String
 });
 
-module.exports = mongoose.model('Polls', pollSchema);
+module.exports = mongoose.model('Votation', votationSchema);
 
 /*const answersSchema = Schema({
     answers: [{}]

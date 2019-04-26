@@ -9,11 +9,13 @@
                     </div>
                     <div class="card-body">
                         <h3>{{question}}</h3>
+                        <input type="text" name="question" value="{{question}}" hidden>
                         <div id="votation">
                             <p>Respuestas:</p>
                             {{#each answers}}
                             <label><input type="radio" name="chosenAnswer" value="{{this}}"><span>{{this}}</span></label>
                             {{/each}}
+                            
                         </div>
                     </div>
                     <div class="card-footer bg-transparent">

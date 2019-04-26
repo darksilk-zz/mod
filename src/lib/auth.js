@@ -26,7 +26,6 @@ async function isPerson(curp) {
 
 module.exports = {
     isLoggedIn(req, res, next) {
-        console.log("is any user or person")
         if (req.isAuthenticated()) {
             return next();
         }
@@ -34,8 +33,6 @@ module.exports = {
     },
 
     isLoggedInAdmin(req, res, next) {
-        console.log("is admin")
-
         isAdmin(req.user.username).then(result => {
             if (req.isAuthenticated() && result == 1) {
                 return next();
@@ -45,7 +42,6 @@ module.exports = {
     },
 
     isLoggedInPerson(req, res, next) {
-        console.log("is person")
         isPerson(req.user.curp).then(result => {
             if (req.isAuthenticated() && result == 3) {
                 return next();
@@ -55,9 +51,7 @@ module.exports = {
     },
 
     isLoggedInUser(req, res, next) {
-        console.log("is user")
         isAdmin(req.user.username).then(result => {
-            console.log("hllo")
             if (req.isAuthenticated() && result == 2 || result == 1 ) {
                 return next();
             }
