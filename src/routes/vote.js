@@ -32,11 +32,13 @@ router.get('/logout', (req, res) => {
 router.get('/polls', isLoggedInPerson, async (req, res) => {
     const allPolls = await Poll.find({});
     const choose = await VoteControl.find({ person_id: req.user.curp });
+    const estadoPerson = await db.query('select nombre, id from estados where id=?',[req.user.estado_id]);
 
     /*var filtered = polls.filter(function(el) { return el._id != "5cc27257faa2fd485ce43bde" && el._id != "5cb743df232ea749c0301462"; });*/
     var polls = [];
     allPolls.forEach((pollElement, i) => {
-        if((pollElement.active == 1) && (pollElement.scopeSex == req.user.sex || pollElement.scopeSex == "Todos")){
+        if((pollElement.active == 1) && (pollElement.scopeSex == req.user.sex || pollElement.scopeSex == "Todos")
+            && (pollElement.region == "Nacional" || pollElement.region == estadoPerson[0].nombre)){
             polls.push(pollElement)
         }
     })

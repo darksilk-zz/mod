@@ -21,10 +21,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="scopeSex">Genero: </label>
-                                <select name="scopeSex">
+                                <select id="scopeSex" name="scopeSex">
                                     <option value="Todos">Todos</option>
                                     <option value="Masculino">Masculino</option>
                                     <option value="Femenino">Femenino</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="region">Region: </label>
+                                <select id="region" name="region">
+                                    <option value="Nacional">Nacional</option>
+                                    {{#each estados}}
+                                    <option value="{{nombre}}">{{nombre}}</option>
+                                    {{/each}}
                                 </select>
                             </div>
                             <div class="form-group">

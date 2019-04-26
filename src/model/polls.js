@@ -12,6 +12,7 @@ const pollSchema = Schema({
   created_at: Date,
   created_by: String,
   scopeSex: String,
+  region: String,
   answers: [{}]
 });
 
