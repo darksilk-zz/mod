@@ -44,9 +44,23 @@ router.get('/polls', isLoggedInPerson, async (req, res) => {
     })
 
     if(choose.length>0){
+        /*var x=polls.length;
+        for(var i=0 ; i<x ; i++){
+            choose[0].polls.forEach((chooseElement) => {
+                var este = polls[i]._id;
+                if(chooseElement == este){
+                    polls.splice(i, 1);
+                    console.log("borrando")
+                    x--;
+               }
+            });
+        }*/
         polls.forEach((pollElement, i) => {
+            console.log("recorrido", i)
             choose[0].polls.forEach((chooseElement, j) => {
+                console.log(chooseElement, pollElement._id)
                 if(chooseElement == pollElement._id){
+                    //console.log("Borrando")
                     polls.splice(i, 1);
                }
             });
@@ -96,7 +110,6 @@ router.post('/saveVote/:_id', isLoggedInPerson, async (req, res, next) => {
                 });
                 await votecontrol.save();
             } else {
-                console.log("Person vote else");
                 VoteControl.updateOne(
                     { "person_id": person[0].curp },
                     { "$push": { "polls": _id } },
