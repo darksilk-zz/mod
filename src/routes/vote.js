@@ -47,7 +47,7 @@ router.get('/polls', isLoggedInPerson, async (req, res) => {
         polls.forEach((pollElement, i) => {
             choose[0].polls.forEach((chooseElement, j) => {
                 if(chooseElement == pollElement._id){
-                    polls.splice(i, 1);
+                    polls.splice(i, 1); 
                }
             });
         })
