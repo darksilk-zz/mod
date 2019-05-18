@@ -1,0 +1,24 @@
+<header class="download bg-primary text-center" style="height: 89vh; min-height: 730px; padding-top: 0; padding-bottom: 0; background: linear-gradient(to left,#7b4397,#dc2430);">
+    <div class="container h-100"style="padding-top: 10%;">
+        <div class="row justify-content-md-center">
+            <div class="col-md-4">
+                {{> flashMsgs }}
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h3>Iniciar sesión</h3>
+                    </div>
+                    <div class="card-body">
+                        <img src="/img/fingerprint_wait.gif" alt="Logo" style="width: 300px;">
+                        <h5 id="monitor">Coloca tu dedo indice sobre el lector</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<script src="/scripts/socket.js"></script>
+<script>
+    $('#username').focus();
+</script>

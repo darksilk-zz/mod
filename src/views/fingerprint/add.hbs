@@ -1,0 +1,78 @@
+<header class="download bg-primary text-center"
+    style="height: 89vh; min-height: 730px; padding-top: 0; padding-bottom: 0; background: linear-gradient(to left,#7b4397,#dc2430);">
+    <div class="container" style="padding-top: 10%;">
+        <div class="row justify-content-md-center">
+            <div class="col-md-8">
+                {{> flashMsgs }}
+                <div class="card text-left">
+                    <div class="card-header">
+                        <h3>Registrar nueva persona</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/person/add" method="POST">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="name">Nombre(s): </label>
+                                    <input type="text" name="name" placeholder="Nombre(s)" id="name" class="form-control">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="lastname">Apellido paterno: </label>
+                                    <input type="text" name="lastname" id="lastname" placeholder="Apellido Paterno" class="form-control">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="surname">Apellido materno: </label>
+                                    <input type="text" name="surname" id="surname" placeholder="Apellido Materno" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="birthdate">Fecha de nacimiento: </label>
+                                    <input type="text" name="birthdate" id="birthdate" placeholder="Fecha de nacimiento" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="curp">CURP: </label>
+                                    <input type="text" name="curp" id="curp" value="" placeholder="CURP" onblur="regexCURP()" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="estado">Estado: </label>
+                                    <select id="estado" name="estado" class="form-control">
+                                        <option selected="" disabled="">Selecciona un estado</option>
+                                        {{#each estados}}
+                                        <option value="{{id}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="municipio" class="text-left">Municipio: </label>
+                                    <select id="municipio" name="municipio" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="address">Calle: </label>
+                                    <input type="text" id="address" name="address" placeholder="Calle" class="form-control">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="address">Exterior: </label>
+                                    <input type="text" id="address_num" name="address_num" placeholder="Ext" class="form-control">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="address">Interior: </label>
+                                    <input type="text" id="address_letter" name="address_letter" placeholder="Int" class="form-control">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="address">CP: </label>
+                                    <input type="text" id="cp" name="cp" placeholder="CP" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script src="/scripts/regexCURP.js"></script>
+<script src="/scripts/getMunicipio.js"></script>
+<script src="/scripts/dateTimePickerPerson.js"></script>

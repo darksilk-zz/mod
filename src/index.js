@@ -63,6 +63,7 @@ app.use(async (req, res, next) => {
 //Routes
 app.use(require('./routes'));
 app.use(require('./routes/auth'))
+app.use('/fingerprint', require('./routes/fingerprint'));
 app.use('/person', require('./routes/person'));
 app.use('/polls', require('./routes/polls'));
 app.use('/users', require('./routes/users', () => {
