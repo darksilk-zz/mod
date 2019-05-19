@@ -16,7 +16,7 @@ var fs = require('fs')
 const app = express();
 require('./lib/passport');
 
-mongoose.connect('mongodb://192.168.56.104/fingervote', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/fingervote', { useNewUrlParser: true })
   .then(db => console.log('DB Mongo connected'))
   .catch(err => console.log(err));
 
