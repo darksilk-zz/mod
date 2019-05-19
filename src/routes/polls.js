@@ -6,6 +6,7 @@ const db = require('../database');
 const CronJob = require('cron').CronJob;
 var cron = require('node-cron');
 const { isLoggedInUser } = require('../lib/auth');
+var mongoose = require('mongoose');
 
 router.get('/', isLoggedInUser, async (req, res) => {
     res.send("Hello world");
@@ -38,7 +39,11 @@ router.post('/add', isLoggedInUser, async (req, res, next) => {
     var dates = (req.body.dateRange).split("-");
     var epochStart = moment(dates[0], "DD-MM-YYYY HH:mm").unix();
     var epochEnd = moment(dates[1], "DD-MM-YYYY HH:mm").unix();
+    var myID = mongoose.Types.ObjectId();
+    console.log(myID);
     var poll = new Poll({
+        _id: myID,
+        myId: myID,
         question: req.body.question,
         description: req.body.description,
         scopeSex: req.body.scopeSex,

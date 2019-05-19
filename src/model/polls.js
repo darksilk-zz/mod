@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const pollSchema = Schema({
+  myId: String,
   question: String,
   description: String, 
   dateStart: String,

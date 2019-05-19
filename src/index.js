@@ -9,13 +9,14 @@ const {database} = require('./keys');
 const db = require('./database');
 const mongoose = require('mongoose');
 const passport = require('passport');
+var fs = require('fs')
 //var Passport = require('passport').Passport, passport = new Passport(), personPassport = new Passport();
 
 //Initialize
 const app = express();
 require('./lib/passport');
 
-mongoose.connect('mongodb://localhost/encuestas-mongo', { useNewUrlParser: true })
+mongoose.connect('mongodb://192.168.56.104/fingervote', { useNewUrlParser: true })
   .then(db => console.log('DB Mongo connected'))
   .catch(err => console.log(err));
 
@@ -45,8 +46,17 @@ app.use(session({
     store: new MySQLStore(database)
 }));
 
+
+
 app.use(flash());
 //app.use(morgan('dev'));
+/*app.use(morgan('dev', {
+    skip: function (req, res) { return res.statusCode < 400 }
+  }))
+// log all requests to access.log
+app.use(morgan('common', {
+    stream: fs.createWriteStream(path.resolve('C:/Users/danie/Desktop/share/access.log'), { flags: 'a' })
+  }))*/
  /*aceptar dsde formularios los datos que envian los usuarios*/
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
