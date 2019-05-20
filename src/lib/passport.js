@@ -58,25 +58,17 @@ passport.use('local.signin', new LocalStrategy({
 ));
 
 passport.use('local.signinPerson', new LocalStrategy({
-    usernameField: 'person',
+    usernameField: 'fingerprint',
     passwordField: 'fingerprint',
-    passReqToCallback: true
-}, async (req, person, fingerprint, done) => {
-    const rows = await db.query('select * from person where name = ?', [person]);
+    passReqToCallBack: true
+}, async (req, fingerprint, done) => {
+    const rows = await db.query('select * from person where fingerprint = ?', [fingerprint]);
     if(rows.length>0){
         const user = rows[0]; 
-        //const validPassword = await helpers.decryptPassword(password, user.password);
-        if(fingerprint==user.fingerprint){
-            console.log("Password is valid");
-            done(null, user, req.flash('success', 'Bienvenido! Gracias por ejercer tu voto.'));
-            //done(null, user);
-        } else {
-            console.log("Password is not valid");
-            done(null, false, req.flash('message', 'Contraseña incorrecta'));
-        }
+        done(null, user);
     } else {
         console.log("Username doesnt exist");
-        return done(null, false, req.flash('message', 'Nombre de usuario no existe'));
+        return done(null, false, req.flash('message', 'La huella no existe'));
     }
 }
 ));
