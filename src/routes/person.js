@@ -63,7 +63,7 @@ router.route('/add')
         );
     });
 
-router.put('/getMunicipio/:id', isLoggedInUser, async (req, res) => {
+router.put('/getMunicipio/:id', async (req, res) => {
     //console.log(req.body, req.params);
     const { id } = req.params;
     const arrayMunicipios = await db.query('select id, estado_id, nombre from municipios where estado_id= ?', [id]);

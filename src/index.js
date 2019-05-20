@@ -16,7 +16,7 @@ var fs = require('fs')
 const app = express();
 require('./lib/passport');
 
-mongoose.connect('mongodb://192.168.56.104/fingervote', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/fingervote', { useNewUrlParser: true })
   .then(db => console.log('DB Mongo connected'))
   .catch(err => console.log(err));
 
@@ -80,6 +80,7 @@ app.use(async (req, res, next) => {
 //Routes
 app.use(require('./routes'));
 app.use(require('./routes/auth'))
+app.use('/fingerprint', require('./routes/fingerprint'));
 app.use('/person', require('./routes/person'));
 app.use('/polls', require('./routes/polls'));
 app.use('/vote', require('./routes/vote'));
