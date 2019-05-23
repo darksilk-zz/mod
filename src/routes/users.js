@@ -6,7 +6,7 @@ const helpers = require('../lib/helpers');
 const { isLoggedIn, isNotLoggedIn, isLoggedInAdmin } = require('../lib/auth');
 
 
-router.get('/', (req, res) => {
+router.get('/', isLoggedInAdmin, (req, res) => {
     res.render("./users/index.hbs");
 });
 

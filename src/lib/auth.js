@@ -33,35 +33,49 @@ module.exports = {
     },
 
     isLoggedInAdmin(req, res, next) {
-        isAdmin(req.user.username).then(result => {
-            if (req.isAuthenticated() && result == 1) {
-                return next();
-            }
+        if(typeof req.user !== "undefined"){
+            isAdmin(req.user.username).then(result => {
+                if (req.isAuthenticated() && result == 1) {
+                    return next();
+                }
+                return res.redirect('/');
+            })
+        }
+        else{
             return res.redirect('/');
-        })
+        }
     },
 
     isLoggedInPerson(req, res, next) {
-        isPerson(req.user.curp).then(result => {
-            if (req.isAuthenticated() && result == 3) {
-                return next();
-            }
+        if(typeof req.user !== "undefined"){
+            isPerson(req.user.curp).then(result => {
+                if (req.isAuthenticated() && result == 3) {
+                    return next();
+                }
+                return res.redirect('/');
+            })
+        }
+        else{
             return res.redirect('/');
-        })
+        }
     },
 
     isLoggedInUser(req, res, next) {
-        isAdmin(req.user.username).then(result => {
-            if (req.isAuthenticated() && result == 2 || result == 1 ) {
-                return next();
-            }
+        if(typeof req.user !== "undefined"){
+            isAdmin(req.user.username).then(result => {
+                if (req.isAuthenticated() && result == 2 || result == 1 ) {
+                    return next();
+                }
+                return res.redirect('/');
+            })
+        }
+        else{
             return res.redirect('/');
-        })
+        }
     },
 
     isNotLoggedIn(req, res, next) {
         if (!req.isAuthenticated()) {
-
             return next();
         }
         return res.redirect('/profile');
